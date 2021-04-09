@@ -110,3 +110,48 @@ def make_quartic_evaluator(a, b, c, d, e):
 
 class Polygon:
     """Polygon class."""
+    def __init__(self, n_sides, lengths=None, angles=None):
+        self.n_sides = n_sides
+        self.lengths = lengths
+        self.angles = angles
+
+    def is_rectangle(self):
+    #returns True if the polygon is a rectangle,
+    #False if it is definitely not a rectangle, and None
+    #if the angle list is unknown (None).
+        if self.angles is None:
+            return None
+        if self.n_sides == 4 and \
+           self.angles = [90, 90, 90, 90]:
+            sides = self.lengths
+            for i in range(2):
+                w = self.lengths[1]
+                sides.remove(w)
+                if w not in sides:
+                    return False
+                else:
+                    remove(w)
+            return True
+        if self.n_sides != 4 or \
+           sum(self.angles) != 360
+            [i for i,a in enumerate(self.angles) if a == 90] != [90, 90, 90, 90]:
+            return False
+        pass
+
+    def is_rhombus(self):
+        pass
+
+    def is_square(self):
+        pass
+
+    def is_regular_hexagon(self):
+        pass
+
+    def is_isosceles_triangle(self):
+        pass
+
+    def is_equilateral_triangle(self):
+        pass
+
+    def is_scalene_triangle(self):
+        pass
