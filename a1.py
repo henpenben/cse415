@@ -88,9 +88,9 @@ def count_words(text):
     count = {}
     for word in re.findall(r"([A-Za-z0-9-+*/@#%'`_\"^=<>\\]+)", text.lower()):
         if word in count:
-            count[w] = count[w] + 1
+            count[word] = count[word] + 1
         else:
-            count[w] = 1
+            count[word] = 1
     return count
     """Return a dictionary having the words in the text as keys,
     and the numbers of occurrences of the words as values.
