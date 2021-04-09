@@ -71,6 +71,11 @@ def five_times_list(input_list):
 
 
 def triple_vowels(text):
+    vowels = ["A","E","I","O","U","a","e","i","o","u"]
+    for v in vowels:
+        text = text.replace(v, v*3)
+    return text
+
     """Return a new version of text, with all the vowels tripled.
     For example:  "The *BIG BAD* wolf!" => "Theee "BIIIG BAAAD* wooolf!".
     For this exercise assume the vowels are
