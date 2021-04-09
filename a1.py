@@ -12,7 +12,7 @@ def last_prime(x):
     if x < 0:
         return False
     if x < 3:
-        return 1
+        return 2
     if x % 2 == 0:
         x -= 1
     for i in range(x, 2, -2):
@@ -35,9 +35,8 @@ def quadratic_roots(a, b, c):
     ac = 4*a*c
     if bb < ac:
         return "complex"
-    ba = -b / (2*a)
     rad = math.sqrt(bb - ac)
-    return (ba + rad, ba - rad)
+    return ((-b + rad)/(2*a), (-b - rad)/(2*a))
     """Return the roots of a quadratic equation (real cases only).
     Return results in tuple-of-floats form, e.g., (-7.0, 3.0)
     Return "complex" if real roots do not exist."""
@@ -86,7 +85,7 @@ def triple_vowels(text):
 
 def count_words(text):
     count = {}
-    for word in re.findall(r"([A-Za-z0-9-+*/@#%'`_\"^=<>\\]+)", text.lower()):
+    for word in re.findall(r"([A-Za-z0-9-+*/@#%'/]+)", text.lower()):
         if word in count:
             count[word] = count[word] + 1
         else:
