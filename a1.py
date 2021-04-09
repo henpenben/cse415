@@ -64,6 +64,7 @@ def perfect_shuffle(even_list):
 
 
 def five_times_list(input_list):
+    return [x*5 for x in input_list]
     """Assume a list of numbers is input. Using a list comprehension,
     return a new list in which each input element has been multiplied
     by 5."""
