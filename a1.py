@@ -101,6 +101,7 @@ def count_words(text):
 
 
 def make_quartic_evaluator(a, b, c, d, e):
+    return lambda x: a*x**4 + b*x**3 + c*x**2 + d*x + e
     """When called with 5 numbers, returns a function of one variable (x)
     that evaluates the quartic polynomial
     a x^4 + b x^3 + c x^2 + d x + e.
