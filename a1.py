@@ -44,6 +44,18 @@ def quadratic_roots(a, b, c):
 
 
 def perfect_shuffle(even_list):
+    l = len(even_list)
+    if l % 2 != 0:
+        return "list has an odd number of elements!"
+    listA = even_list[0:l//2]
+    listB = even_list[l//2:]
+    listA.reverse()
+    listB.reverse()
+    newList = []
+    for i in range(l//2):
+        newList.append(listA.pop())
+        newList.append(listB.pop())
+    return newList
     """Assume even_list is a list of an even number of elements.
     Return a new list that is the perfect-shuffle of the input.
     Perfect shuffle means splitting a list into two halves and then interleaving
