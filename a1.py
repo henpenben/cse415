@@ -1,4 +1,5 @@
 import math
+import re
 
 def is_multiple_of_11(n):
     """Return True if n is a multiple of 11; False otherwise."""
@@ -84,6 +85,13 @@ def triple_vowels(text):
 
 
 def count_words(text):
+    count = {}
+    for word in re.findall(r"([A-Za-z0-9-+*/@#%'`_\"^=<>\\]+)", text.lower()):
+        if word in count:
+            count[w] = count[w] + 1
+        else:
+            count[w] = 1
+    return count
     """Return a dictionary having the words in the text as keys,
     and the numbers of occurrences of the words as values.
     Assume a word is a substring of letters and digits and the characters
