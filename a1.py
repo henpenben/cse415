@@ -9,7 +9,7 @@ def last_prime(x):
     """Return the largest prime number p that is less than or equal to m.
     You might wish to define a helper function for this.
     You may assume m is a positive integer."""
-    if x < 0:
+    if x < 2:
         return False
     if x < 3:
         return 2
@@ -119,39 +119,145 @@ class Polygon:
     #returns True if the polygon is a rectangle,
     #False if it is definitely not a rectangle, and None
     #if the angle list is unknown (None).
+        if self.is_square():
+            return True
+        if self.n_sides != 4:
+            return False
         if self.angles is None:
             return None
-        if self.n_sides == 4 and \
-           self.angles = [90, 90, 90, 90]:
-            sides = self.lengths
-            for i in range(2):
-                w = self.lengths[1]
-                sides.remove(w)
-                if w not in sides:
-                    return False
-                else:
-                    remove(w)
+        if self.angles == [90, 90, 90, 90]:
             return True
-        if self.n_sides != 4 or \
-           sum(self.angles) != 360
-            [i for i,a in enumerate(self.angles) if a == 90] != [90, 90, 90, 90]:
+        else:
             return False
-        pass
 
     def is_rhombus(self):
-        pass
+        if self.n_sides != 4:
+            return False
+
+        if self.angles is None or self.lengths is None:
+            return None
+
+        l = self.lengths
+        if not (l[0] == l[1] == l[2] == l[3]):
+            return False
+
+        angles = self.angles
+        a = angles.pop()
+        if a in angles:
+            angles.remove(a)
+            if angles[0] != angles[1] or angles[0] + a != 180:
+                return False
+        else:
+            return False
+        
+        return True
+        #rhombus:
+        #4 equal sides, 4 vertices
+        #2 unique angles, opposite angles match
+        #total angle sum 360
+        #non unique angle pair sum 180
 
     def is_square(self):
-        pass
+        if self.n_sides != 4:
+            return False
+        
+        if self.angles is None or self.lengths is None:
+            return None
+
+        sides = self.lengths
+        angles = self.angles
+        for i in range(4):
+            i = sides[0]
+            sides.remove(i)
+            if i not in sides or 90 not in angles:
+                return False
+            else:
+                sides.remove(i)
+                angles.remove(90)
+        #square:
+        #4 equal sides
+        #4 90 degree angles
+        #satisfies is_rectangle
 
     def is_regular_hexagon(self):
-        pass
+        if self.n_sides != 6:
+            return False
+
+        if self.angles is None or self.lengths is None:
+            return None
+
+        sides = self.lengths
+        angles = self.angles
+        for i in range(6):
+            i = sides[0]
+            if i not in sides or angles[0] != 120:
+                return False
+            else:
+                sides.remove(i)
+                angles.pop(0)
+
+        return True
+        #reg hex:
+        #6 equal sides
+        #6 equal 120 angles
+        #angle sum 720
 
     def is_isosceles_triangle(self):
-        pass
+        if self.is_scalene_triangle():
+            return False
+        if self.is_equilateral_triangle():
+            return True
+        if self.n_sides != 3:
+            return False
+        if self.lengths is None and self.angles is None:
+            return None
+
+        if self.lengths is not None:
+            if self.lengths[0] != self.lengths[1] and self.lengths[0] != self.lengths[2]:
+                return False
+
+        if self.angles is not None:
+            if sum(self.angles) != 180:
+                return False
+            if self.angles[0] == self.angles[1] == self.angles[2]:
+                return False
+            if self.angles[0] != self.angles[1] and self.angles[0] != self.angles[2]:
+                return False
+
+        return True
+        #iso tri
+        #3 sides
+        #2 equal sides
+        #180 deg total
+        #2 equal angles
 
     def is_equilateral_triangle(self):
-        pass
+        if self.angles == [60, 60, 60] and self.n_sides == 3:
+            return True
+        return False
+        #eq tri
+        #3 equal sides
+        #3 60 angles
 
     def is_scalene_triangle(self):
-        pass
+        if self.n_sides != 3:
+            return False
+        if self.lengths is not None:
+            if self.lengths[0] == self.lengths[1] or \
+            self.lengths[1] == self.lengths[2] or \
+            self.lengths[0] == self.lengths[2]:
+                return False
+        if self.angles is not None:
+            if sum(self.angles) != 180 or \
+            self.angles[0] == self.angles[1] or \
+            self.angles[1] == self.angles[2] or \
+            self.angles[0] == self.angles[2]:
+                return False
+        if self.angles is None and self.lengths is None:
+            return None
+        return True
+        #scal tri
+        #no equal sides
+        #no equal angles
+        #3 sides
+        #3 angles
