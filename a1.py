@@ -125,30 +125,37 @@ class Polygon:
             return False
         if self.angles is None:
             return None
-        if self.angles == [90, 90, 90, 90]:
-            return True
-        else:
-            return False
+        for i in range(4):
+            if self.angles[i] != 90:
+                return False
+        return True
 
     def is_rhombus(self):
         if self.n_sides != 4:
             return False
 
-        if self.angles is None or self.lengths is None:
+        if self.angles is None and self.lengths is None:
             return None
 
-        l = self.lengths
-        if not (l[0] == l[1] == l[2] == l[3]):
-            return False
-
-        angles = self.angles
-        a = angles.pop()
-        if a in angles:
-            angles.remove(a)
-            if angles[0] != angles[1] or angles[0] + a != 180:
+        print(self.angles)
+        if self.lengths is not None:
+            l = self.lengths
+            if not (l[0] == l[1] == l[2] == l[3]):
                 return False
-        else:
-            return False
+            if self.angles is None:
+                return None
+
+        if self.angles is not None:
+            angles = self.angles
+            a = angles.pop()
+            if a in angles:
+                angles.remove(a)
+                if angles[0] != angles[1] or angles[0] + a != 180:
+                    return False
+            else:
+                return False
+            if self.lengths is None:
+                return None
         
         return True
         #rhombus:
@@ -161,19 +168,21 @@ class Polygon:
         if self.n_sides != 4:
             return False
         
-        if self.angles is None or self.lengths is None:
+        if self.angles is None and self.lengths is None:
             return None
 
-        sides = self.lengths
-        angles = self.angles
-        for i in range(4):
-            i = sides[0]
-            sides.remove(i)
-            if i not in sides or 90 not in angles:
-                return False
-            else:
-                sides.remove(i)
-                angles.remove(90)
+        if self.angles is None and self.lengths is None:
+            return None
+
+        if self.angles is not None:
+            for i in range(4):
+                if self.angles[i] != 90:
+                    return False
+
+        if self.lengths is not None:
+            for i in range(4):
+                if self.lengths[i] != self.lengths[0]:
+                    return False
         #square:
         #4 equal sides
         #4 90 degree angles
@@ -183,18 +192,27 @@ class Polygon:
         if self.n_sides != 6:
             return False
 
-        if self.angles is None or self.lengths is None:
+        if self.angles is None and self.lengths is None:
             return None
 
-        sides = self.lengths
-        angles = self.angles
-        for i in range(6):
-            i = sides[0]
-            if i not in sides or angles[0] != 120:
-                return False
-            else:
-                sides.remove(i)
-                angles.pop(0)
+        if self.angles is not None:
+            angs = self.angles
+            a = angs.pop()
+            for i in range(5):
+                if a != 120:
+                    return False
+                a = angs.pop()
+            if self.lengths is None:
+                return None
+
+        if self.lengths is not None:
+            lens = self.lengths
+            l = lens.pop()
+            for i in range(5):
+                if l != lens.pop():
+                    return False
+            if self.angles is None:
+                return None
 
         return True
         #reg hex:
@@ -232,6 +250,8 @@ class Polygon:
         #2 equal angles
 
     def is_equilateral_triangle(self):
+        if self.lengths is None and self.angles is None:
+            return None
         if self.angles == [60, 60, 60] and self.n_sides == 3:
             return True
         return False
