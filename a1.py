@@ -137,13 +137,10 @@ class Polygon:
         if self.angles is None and self.lengths is None:
             return None
 
-        print(self.angles)
         if self.lengths is not None:
             l = self.lengths
             if not (l[0] == l[1] == l[2] == l[3]):
                 return False
-            if self.angles is None:
-                return None
 
         if self.angles is not None:
             angles = self.angles
@@ -171,9 +168,6 @@ class Polygon:
         if self.angles is None and self.lengths is None:
             return None
 
-        if self.angles is None and self.lengths is None:
-            return None
-
         if self.angles is not None:
             for i in range(4):
                 if self.angles[i] != 90:
@@ -183,6 +177,8 @@ class Polygon:
             for i in range(4):
                 if self.lengths[i] != self.lengths[0]:
                     return False
+
+        return True
         #square:
         #4 equal sides
         #4 90 degree angles
@@ -206,10 +202,11 @@ class Polygon:
                 return None
 
         if self.lengths is not None:
-            lens = self.lengths
-            l = lens.pop()
-            for i in range(5):
-                if l != lens.pop():
+            if len(self.lengths) != 6:
+                return False
+            for i in range(6):
+                l = self.lengths[i]
+                if l != self.lengths[0]:
                     return False
             if self.angles is None:
                 return None
@@ -254,6 +251,12 @@ class Polygon:
             return None
         if self.angles == [60, 60, 60] and self.n_sides == 3:
             return True
+        if self.angles is not None:
+            if self.angles[0] == [self.angles[0]]*3:
+                return True
+        if self.lengths is not None:
+            if self.lengths[0] == [self.lengths[0]]*3:
+                return True
         return False
         #eq tri
         #3 equal sides
