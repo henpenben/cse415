@@ -5,7 +5,7 @@ UW NetID: 1866071
 CSE 415, Spring 2021, University of Washington
 
 This code contains my implementation of the Iterative BFS algorithm.
-It's mostly copied from the given implementation of iterative DFS.
+It's pretty much copied from the given implementation of iterative DFS.
 
 Usage:
  python ItrBFS.py HumansRobotsFerry
