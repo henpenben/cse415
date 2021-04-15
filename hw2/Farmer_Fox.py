@@ -34,8 +34,12 @@ class State:
 
     # returns whether a given state is equal to current state
     def __eq__(self, other):
+      a = self.copy()
+      b = other.copy()
       for direction in [L, R]:
-        if self.s[direction] != other.s[direction]:
+        a.s[direction].sort()
+        b.s[direction].sort()
+        if a.s[direction] != b.s[direction]:
           return False
       return True
 
@@ -130,7 +134,7 @@ class Operator:
   def apply(self, s):
     return self.state_transf(s)
 
-combinations = [[F,None], [F,X], [F,C], [F,G]]
+combinations = [[F,None], [X,F], [F,C], [F,G]]
 
 OPERATORS = [
   Operator(
