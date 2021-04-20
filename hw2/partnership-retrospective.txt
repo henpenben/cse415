@@ -1,0 +1,4 @@
+henry hough
+kush chopra
+
+we divided the work by first working together on A* with a live editor, then Henry did the heuristics while Kush did the report.
