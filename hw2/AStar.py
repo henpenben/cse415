@@ -1,17 +1,7 @@
 """ AStar.py
 
 A* search algorithm
-Henry Hough
-
-henryhow
-1866071
-
-Kush Chopra
-kush22
-2078801
-
-Assignment 2, Part 2, in CSE 415, Spring 2021.
-
+Henry & Kush
 modified from:
  UCS, Steve Tanimoto, Univ. of Washington.
  April 6, 2021.
@@ -109,8 +99,6 @@ class AStar:
                 self.PATH_LENGTH = len(self.PATH) - 1
                 print(f'Length of solution path found: {self.PATH_LENGTH} edges')
                 self.TOTAL_COST = self.g[S]
-                # if str(initial_state) == "Caen":
-                #     self.COUNT += 1
                 print(f'Total cost of solution path found: {self.TOTAL_COST}')
                 return
             self.COUNT += 1
@@ -127,15 +115,9 @@ class AStar:
                     new_g = gs + edge_cost
 
                     if new_state in self.CLOSED:
-                        if new_g + h(new_state) < self.g[new_state] + h(S):
                         # print("Already have this state, in CLOSED. del ...")
-                            print("-----------------------")
-                            self.CLOSED.remove(new_state)
-                            self.OPEN.insert(new_state, new_g + h(new_state))
-                        else:
-                            del new_state
-                            continue
-
+                        del new_state
+                        continue
                     # If new_state already exists on OPEN:
                     #   If its new priority is less than its old priority,
                     #     update its priority on OPEN, and set its BACKLINK to S.
