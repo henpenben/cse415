@@ -26,6 +26,7 @@ import sys
 import importlib
 from PriorityQueue import My_Priority_Queue
 
+
 class AStar:
     """
     Class that implements Uniform-Cost Search for any problem space (provided in the required format)
@@ -45,8 +46,6 @@ class AStar:
         # The value g(s) represents the cost along the best path found so far
         # from the initial state to state s.
         self.g = {}  # We will use a hash table to associate g values with states.
-        self.h = problem.h  # Heuristic function
-
         print("\nWelcome to A*.")
 
     def runAStar(self):
@@ -56,6 +55,7 @@ class AStar:
         print("Initial State:")
         print(initial_state)
 
+        self.h = self.Problem.h  # Heuristic function
         self.COUNT = 0
         self.MAX_OPEN_LENGTH = 0
         self.BACKLINKS = {}
@@ -88,8 +88,9 @@ class AStar:
             #         Delete S from OPEN.
             #         Put S on CLOSED.
             #         If S is a goal state, output its description
+
             (S, P) = self.OPEN.delete_min()
-            # print("In Step 3, returned from OPEN.delete_min with results (S,P)= ", (str(S), P))
+            print("In Step 3, returned from OPEN.delete_min with results (S,P)= ", (str(S), P))
             self.CLOSED.append(S)
 
             if self.Problem.GOAL_TEST(S):
@@ -104,7 +105,12 @@ class AStar:
 
             # STEP 4. Generate each successors of S and delete
             #         and if it is already on CLOSED, delete the new instance.
-            gs = self.g[S]  # Save the cost of getting to S in a variable.
+            gs = self.g[S] # Save the cost of getting to S in a variable.
+            hs = self.h(S)
+            h = lambda state: self.h(state)
+            fs = lambda state: gs + self.h(state)
+
+
             for op in self.Problem.OPERATORS:
                 if op.is_applicable(S):
                     new_state = op.apply(S)
@@ -118,12 +124,12 @@ class AStar:
                     # If new_state already exists on OPEN:
                     #   If its new priority is less than its old priority,
                     #     update its priority on OPEN, and set its BACKLINK to S.
-                    #   Else: forget out this new state object... delete it.
+                    #   Else: forget about this new state object... delete it.
 
                     if new_state in self.OPEN:
                         # print("new_state is in OPEN already, so...")
                         P = self.OPEN[new_state]
-                        if new_g < P:
+                        if new_g + h(new_state) < P:
                             # print("New priority value is lower, so del older one")
                             del self.OPEN[new_state]
                             self.OPEN.insert(new_state, new_g)
