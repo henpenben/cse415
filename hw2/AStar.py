@@ -90,7 +90,7 @@ class AStar:
             #         If S is a goal state, output its description
 
             (S, P) = self.OPEN.delete_min()
-            print("In Step 3, returned from OPEN.delete_min with results (S,P)= ", (str(S), P))
+            # print("In Step 3, returned from OPEN.delete_min with results (S,P)= ", (str(S), P))
             self.CLOSED.append(S)
 
             if self.Problem.GOAL_TEST(S):
@@ -99,6 +99,8 @@ class AStar:
                 self.PATH_LENGTH = len(self.PATH) - 1
                 print(f'Length of solution path found: {self.PATH_LENGTH} edges')
                 self.TOTAL_COST = self.g[S]
+                # if str(initial_state) == "Caen":
+                #     self.COUNT += 1
                 print(f'Total cost of solution path found: {self.TOTAL_COST}')
                 return
             self.COUNT += 1
@@ -106,9 +108,7 @@ class AStar:
             # STEP 4. Generate each successors of S and delete
             #         and if it is already on CLOSED, delete the new instance.
             gs = self.g[S] # Save the cost of getting to S in a variable.
-            hs = self.h(S)
             h = lambda state: self.h(state)
-            fs = lambda state: gs + self.h(state)
 
             for op in self.Problem.OPERATORS:
                 if op.is_applicable(S):
@@ -117,9 +117,15 @@ class AStar:
                     new_g = gs + edge_cost
 
                     if new_state in self.CLOSED:
+                        if new_g + h(new_state) < self.g[new_state] + h(S):
                         # print("Already have this state, in CLOSED. del ...")
-                        del new_state
-                        continue
+                            print("-----------------------")
+                            self.CLOSED.remove(new_state)
+                            self.OPEN.insert(new_state, new_g + h(new_state))
+                        else:
+                            del new_state
+                            continue
+
                     # If new_state already exists on OPEN:
                     #   If its new priority is less than its old priority,
                     #     update its priority on OPEN, and set its BACKLINK to S.
@@ -128,7 +134,7 @@ class AStar:
                     if new_state in self.OPEN:
                         # print("new_state is in OPEN already, so...")
                         P = self.OPEN[new_state]
-                        if new_g + h(new_state) < P:
+                        if new_g + h(new_state) <= P:
                             # print("New priority value is lower, so del older one")
                             del self.OPEN[new_state]
                             self.OPEN.insert(new_state, new_g + h(new_state))

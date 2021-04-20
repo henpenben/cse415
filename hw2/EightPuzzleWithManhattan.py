@@ -23,6 +23,6 @@ def h(s):
     actual_col  = l.index(i) % 3
     delta_cols  = abs(actual_col - desired_col)
 
-    manhattan = delta_rows + delta_cols
+    manhattan += delta_rows + delta_cols
 
   return manhattan
