@@ -1,7 +1,17 @@
 """ AStar.py
 
 A* search algorithm
-Henry & Kush
+Henry Hough
+
+henryhow
+1866071
+
+Kush Chopra
+kush22
+2078801
+
+Assignment 2, Part 2, in CSE 415, Spring 2021.
+
 modified from:
  UCS, Steve Tanimoto, Univ. of Washington.
  April 6, 2021.
