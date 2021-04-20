@@ -110,17 +110,16 @@ class AStar:
             h = lambda state: self.h(state)
             fs = lambda state: gs + self.h(state)
 
-
             for op in self.Problem.OPERATORS:
                 if op.is_applicable(S):
                     new_state = op.apply(S)
+                    edge_cost = S.edge_distance(new_state)
+                    new_g = gs + edge_cost
+
                     if new_state in self.CLOSED:
                         # print("Already have this state, in CLOSED. del ...")
                         del new_state
                         continue
-                    edge_cost = S.edge_distance(new_state)
-                    new_g = gs + edge_cost
-
                     # If new_state already exists on OPEN:
                     #   If its new priority is less than its old priority,
                     #     update its priority on OPEN, and set its BACKLINK to S.
@@ -132,14 +131,14 @@ class AStar:
                         if new_g + h(new_state) < P:
                             # print("New priority value is lower, so del older one")
                             del self.OPEN[new_state]
-                            self.OPEN.insert(new_state, new_g)
+                            self.OPEN.insert(new_state, new_g + h(new_state))
                         else:
                             # print("Older one is better, so del new_state")
                             del new_state
                             continue
                     else:
                         # print("new_state was not on OPEN at all, so just put it on.")
-                        self.OPEN.insert(new_state, new_g)
+                        self.OPEN.insert(new_state, new_g + h(new_state))
                     self.BACKLINKS[new_state] = S
                     self.g[new_state] = new_g
 
