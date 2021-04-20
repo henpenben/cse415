@@ -86,7 +86,7 @@ class State():
     # for use by operators in creating new states.
     news = State()
     news.name = self.name
-    return news 
+    return news
 
   def ith_neighbor_exists(self,i):
     '''Tests whether there are enough adjacent cities
